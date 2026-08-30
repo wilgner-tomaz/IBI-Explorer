@@ -1,0 +1,255 @@
+/* ========================================================
+   IBI-EXPLORER - Ocean Modern Style
+   ======================================================== */
+
+:root {
+  --ibi-primary: #0284c7;
+  --ibi-primary-hover: #0369a1;
+  --ibi-primary-light: #f0f9ff;
+  --ibi-primary-border: #bae6fd;
+  --ibi-accent: #06b6d4;
+
+  --ibi-bg-page: #f8fafc;
+  --ibi-card-bg: #ffffff;
+
+  --ibi-text-main: #0f172a;
+  --ibi-text-muted: #64748b;
+  --ibi-border-color: #e2e8f0;
+
+  --ibi-danger: #ef4444;
+  --ibi-danger-bg: #fef2f2;
+}
+
+body {
+  background-color: var(--ibi-bg-page);
+  color: var(--ibi-text-main);
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CABEÇALHO */
+.header-panel {
+  background-color: var(--ibi-card-bg);
+  border: 1px solid var(--ibi-border-color);
+  border-left: 6px solid var(--ibi-primary);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+}
+
+.brand-title {
+  color: var(--ibi-primary);
+}
+.icon-brand {
+  color: var(--ibi-accent);
+}
+
+.btn-logout {
+  color: var(--ibi-danger);
+  background-color: var(--ibi-danger-bg);
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 6px 14px;
+}
+
+.btn-logout:hover {
+  background-color: var(--ibi-danger);
+  color: #ffffff;
+}
+
+/* BOTÕES & NAVEGAÇÃO */
+.btn-primary-custom {
+  background-color: var(--ibi-primary);
+  border-color: var(--ibi-primary);
+  color: #ffffff;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary-custom:hover {
+  background-color: var(--ibi-primary-hover);
+  color: #ffffff;
+}
+
+.nav-pills-custom {
+  background-color: var(--ibi-card-bg);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--ibi-border-color);
+  gap: 4px;
+}
+
+.nav-pills-custom .nav-link {
+  color: var(--ibi-text-muted);
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.nav-pills-custom .nav-link.active {
+  background-color: var(--ibi-primary) !important;
+  color: #ffffff !important;
+}
+
+/* BOTÃO FLUTUANTE (FAB) */
+.btn-fab-record {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--ibi-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 22px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.4);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-fab-record:hover {
+  background-color: var(--ibi-primary-hover);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
+  color: #ffffff;
+}
+
+.btn-fab-record i {
+  font-size: 1.25rem;
+  color: var(--ibi-danger);
+}
+
+/* ESTRUTURA DOS CARDS */
+.card-custom {
+  background-color: var(--ibi-card-bg);
+  border: 1px solid var(--ibi-border-color);
+  border-radius: 16px;
+}
+
+.card-section-title {
+  color: var(--ibi-text-main);
+  font-weight: 700;
+  border-bottom: 2px solid var(--ibi-primary-light);
+  padding-bottom: 12px;
+}
+
+/* FEED ITEM */
+.feed-item {
+  border: 1px solid var(--ibi-border-color);
+  border-radius: 14px;
+  background-color: var(--ibi-card-bg);
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.feed-user-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--ibi-primary-border);
+}
+
+/* CARDS DE MÉTRICAS LOGO ACIMA DA FOTO */
+.metric-badge {
+  background-color: var(--ibi-primary-light);
+  border: 1px solid var(--ibi-primary-border);
+  border-radius: 10px;
+  padding: 10px 4px;
+  text-align: center;
+}
+
+.metric-badge strong {
+  color: var(--ibi-primary);
+  font-size: 1rem;
+  display: block;
+}
+
+.metric-badge small {
+  color: var(--ibi-text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* MÍDIA DA POSTAGEM */
+.feed-post-media {
+  width: 100%;
+  max-height: 440px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 14px;
+  border: 1px solid var(--ibi-border-color);
+}
+
+/* ANIMAÇÃO DE GRAVAÇÃO */
+.animate-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ========================================================
+   CORREÇÃO PARA EXIBIÇÃO DOS MAPAS LEAFLET NAS ROTAS
+   ======================================================== */
+[id^="map-rota-"] {
+  width: 100% !important;
+  height: 250px !important;
+  z-index: 1 !important;
+  background-color: #e5e3df; /* Cor de fundo elegante enquanto o mapa carrega */
+}
+
+.carousel-inner {
+  overflow: hidden;
+}
+/* ========================================================
+   AJUSTE DE MÍDIA NO CARROSSEL DE ROTAS
+   ======================================================== */
+/* ========================================================
+   AJUSTE DE MÍDIA NO CARROSSEL DE ROTAS (FUNDO CLARO)
+   ======================================================== */
+.carousel-item {
+  background-color: #f8fafc !important; /* Mesma cor do fundo da página ou um tom bem suave */
+}
+
+.carousel-item img,
+.carousel-item video {
+  width: 100% !important;
+  height: 250px !important;
+  object-fit: contain !important;
+  background-color: #f8fafc !important; /* Fundo claro combinando com o tema moderno */
+}
+
+/* seta do mapa */
+
+.user-arrow-marker {
+  background: transparent;
+  border: none;
+}
+.user-arrow-icon {
+  font-size: 24px;
+  color: #0d6efd;
+  background: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+

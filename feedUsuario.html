@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="images/nature/Homem.jpeg" type="image/gif" />
+
+    <title>IBI-EXPLORER - Rastreamento e Feed</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="css/feedUsuario.css" />
+  </head>
+
+  <body class="py-4">
+    <div class="container" style="max-width: 960px">
+      <header
+        class="d-flex align-items-center justify-content-between p-3 px-4 rounded-4 mb-4 header-panel"
+      >
+        <h1 class="h4 m-0 fw-bold brand-title d-flex align-items-center gap-2">
+          <i class="bi bi-compass-fill icon-brand"></i>
+          <span>IBI-EXPLORER</span>
+        </h1>
+        <button
+          id="btnLogout"
+          class="btn btn-logout btn-sm fw-semibold d-flex align-items-center gap-2"
+        >
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Sair</span>
+        </button>
+      </header>
+
+      <nav>
+        <ul
+          class="nav nav-pills nav-fill nav-pills-custom mb-4"
+          id="pills-tab"
+          role="tablist"
+        >
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="tab-feed"
+              data-bs-toggle="pill"
+              data-bs-target="#sec-feed"
+              type="button"
+              role="tab"
+            >
+              <i class="bi bi-newspaper"></i> <span>Feed Global</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="tab-rotas"
+              data-bs-toggle="pill"
+              data-bs-target="#sec-rotas"
+              type="button"
+              role="tab"
+            >
+              <i class="bi bi-signpost-split-fill"></i> <span>Rotas</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="tab-pontos"
+              data-bs-toggle="pill"
+              data-bs-target="#sec-pontos"
+              type="button"
+              role="tab"
+            >
+              <i class="bi bi-geo-alt-fill"></i> <span>Pontos de Apoio</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="tab-guias"
+              data-bs-toggle="pill"
+              data-bs-target="#sec-guias"
+              type="button"
+              role="tab"
+            >
+              <i class="bi bi-person-badge-fill"></i> <span>Guias Locais</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="tab-configuracoes"
+              data-bs-toggle="pill"
+              data-bs-target="#sec-configuracoes"
+              type="button"
+              role="tab"
+            >
+              <i class="bi bi-gear-wide-connected"></i>
+              <span>Configurações</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="sec-feed" role="tabpanel">
+          <div class="card card-custom mb-4">
+            <div class="card-body p-4">
+              <h2 class="h5 card-section-title mb-4">
+                <i class="bi bi-newspaper"></i> Explorações Recentes
+              </h2>
+
+              <div id="feedGlobalContainer">
+                <div class="text-center py-5 text-muted">
+                  <div
+                    class="spinner-border text-primary spinner-border-sm me-2"
+                    role="status"
+                  ></div>
+                  <span>Carregando atividades da Ibiapaba...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="sec-rotas" role="tabpanel">
+          <div class="card card-custom mb-4">
+            <div class="card-body p-4">
+              <h2 class="h5 card-section-title mb-4">
+                <i class="bi bi-signpost-split-fill"></i> Rotas Turísticas da
+                Serra
+              </h2>
+              <div id="rotasContainer" class="row g-3">
+                <div class="text-center py-4 text-muted">
+                  <div class="spinner-border spinner-border-sm"></div>
+                  Carregando rotas...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="sec-pontos" role="tabpanel">
+          <div class="card card-custom mb-4">
+            <div class="card-body p-4">
+              <h2 class="h5 card-section-title mb-4">
+                <i class="bi bi-geo-alt-fill"></i> Pontos de Apoio
+              </h2>
+              <div id="pontosContainer" class="row g-3">
+                <div class="text-center py-4 text-muted">
+                  <div class="spinner-border spinner-border-sm"></div>
+                  Carregando pontos...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="sec-guias" role="tabpanel">
+          <div class="card card-custom mb-4">
+            <div class="card-body p-4">
+              <h2 class="h5 card-section-title mb-4">
+                <i class="bi bi-person-badge-fill"></i> Guias Locais
+              </h2>
+              <div id="guiasContainer" class="row g-3">
+                <div class="text-center py-4 text-muted">
+                  <div class="spinner-border spinner-border-sm"></div>
+                  Carregando guias...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="sec-configuracoes" role="tabpanel">
+          <div class="card card-custom mb-4">
+            <div class="card-body p-4">
+              <h2 class="h5 card-section-title mb-4">
+                <i class="bi bi-gear-wide-connected"></i> Configurações
+              </h2>
+
+              <div class="list-group list-group-flush gap-2">
+                <a
+                  href="minhasAtividades.html"
+                  class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center justify-content-between"
+                >
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-journal-check fs-3 text-primary"></i>
+                    <div>
+                      <strong class="d-block text-dark"
+                        >VER MINHAS ATIVIDADES</strong
+                      >
+                      <small class="text-muted"
+                        >Histórico exclusivo dos seus treinos e rotas</small
+                      >
+                    </div>
+                  </div>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+
+                <a
+                  href="contasSenhas.html"
+                  class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center justify-content-between"
+                >
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-shield-lock-fill fs-3 text-primary"></i>
+                    <div>
+                      <strong class="d-block text-dark">CONTAS / SENHAS</strong>
+                      <small class="text-muted"
+                        >Alteração de e-mail, senha e recuperação de
+                        conta</small
+                      >
+                    </div>
+                  </div>
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+
+                <button
+                  type="button"
+                  id="btnConfigLogout"
+                  class="list-group-item list-group-item-action border border-danger-subtle bg-danger-subtle rounded-3 p-3 d-flex align-items-center justify-content-between mt-2"
+                >
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-box-arrow-right fs-3 text-danger"></i>
+                    <div>
+                      <strong class="d-block text-danger">SAIR</strong>
+                      <small class="text-danger-emphasis"
+                        >Encerrar sua sessão na aplicação</small
+                      >
+                    </div>
+                  </div>
+                  <i class="bi bi-chevron-right text-danger"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <button
+      type="button"
+      id="btnOpenTrackerModal"
+      class="btn-fab-record"
+      data-bs-toggle="modal"
+      data-bs-target="#modalRastreamento"
+      title="Gravar Atividade"
+    >
+      <i class="bi bi-record-circle-fill animate-pulse"></i>
+      <span>Gravar</span>
+    </button>
+
+    <div
+      class="modal fade"
+      id="modalRastreamento"
+      data-bs-backdrop="static"
+      tabindex="-1"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+          <div class="modal-header bg-dark text-white border-0">
+            <h5 class="modal-title fw-bold d-flex align-items-center gap-2">
+              <i class="bi bi-geo-fill text-danger"></i> Gravando Atividade
+            </h5>
+          </div>
+          <div class="modal-body p-0">
+            <div id="mapTracker" style="height: 380px; width: 100%"></div>
+
+            <div
+              class="p-3 bg-light d-flex justify-content-around text-center border-top"
+            >
+              <div>
+                <small class="text-muted d-block fw-bold">DISTÂNCIA</small>
+                <span class="fs-4 fw-bold text-primary" id="liveDistance"
+                  >0.00</span
+                >
+                <small>KM</small>
+              </div>
+              <div>
+                <small class="text-muted d-block fw-bold">TEMPO</small>
+                <span class="fs-4 fw-bold text-primary" id="liveTimer"
+                  >00:00</span
+                >
+              </div>
+              <div>
+                <small class="text-muted d-block fw-bold">ELEVAÇÃO</small>
+                <span class="fs-4 fw-bold text-primary" id="liveElevation"
+                  >0</span
+                >
+                <small>M</small>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bg-light border-0">
+            <button
+              type="button"
+              class="btn btn-danger w-100 fw-bold py-2"
+              id="btnStopRecord"
+            >
+              <i class="bi bi-stop-circle-fill me-1"></i> FINALIZAR ATIVIDADE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalSaveActivity" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold text-primary">
+              Publicar Exploração
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div
+              class="p-3 bg-light rounded-3 mb-3 d-flex justify-content-between text-center border"
+            >
+              <div>
+                <small class="text-muted d-block">Distância</small
+                ><strong id="summaryDist">0</strong> KM
+              </div>
+              <div>
+                <small class="text-muted d-block">Tempo</small
+                ><strong id="summaryTime">0</strong> MIN
+              </div>
+              <div>
+                <small class="text-muted d-block">Elevação</small
+                ><strong id="summaryElev">0</strong> M
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold"
+                >Descrição do Treino / Rota:</label
+              >
+              <textarea
+                id="txtModalDescricao"
+                class="form-control"
+                rows="2"
+                placeholder="Como foi sua atividade?"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold"
+                >Adicionar Foto ou Vídeo:</label
+              >
+              <input
+                type="file"
+                id="mediaInput"
+                class="form-control"
+                accept="image/*,video/*"
+              />
+            </div>
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button
+              type="button"
+              class="btn btn-primary-custom w-100 fw-bold"
+              id="btnConfirmSaveSupabase"
+            >
+              PUBLICAR NO FEED
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/supabase-config.js"></script>
+    <script src="js/feedUsuario.js"></script>
+    <script src="js/rastreador.js"></script>
+  </body>
+</html>

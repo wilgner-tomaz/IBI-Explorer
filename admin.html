@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="images/nature/Homem.jpeg" type="image/gif" />
+
+    <title>IBI-EXPLORER - Painel ADM</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+
+  <body class="py-4">
+    <div class="container" style="max-width: 960px">
+      <header
+        class="d-flex align-items-center justify-content-between p-3 px-4 rounded-4 mb-4 header-panel"
+      >
+        <h1 class="h4 m-0 fw-bold brand-title d-flex align-items-center gap-2">
+          <i class="bi bi-shield-lock-fill icon-brand"></i>
+          <span>Painel do Administrador</span>
+        </h1>
+        <a
+          href="index.html"
+          class="btn btn-logout btn-sm fw-semibold d-flex align-items-center gap-2"
+        >
+          <i class="bi bi-arrow-left-circle-fill"></i>
+          <span>Sair</span>
+        </a>
+      </header>
+
+      <nav>
+        <ul
+          class="nav nav-pills nav-fill nav-pills-custom mb-4"
+          id="admTab"
+          role="tablist"
+        >
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="rotas-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#tab-rotas"
+              type="button"
+              role="tab"
+            >
+              <i class="bi bi-signpost-split-fill me-1"></i>
+              <span>Cadastrar Rota</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="guias-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#tab-guias"
+              type="button"
+              role="tab"
+            >
+              <i class="bi bi-person-badge-fill me-1"></i>
+              <span>Cadastrar Guia</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pontos-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#tab-pontos"
+              type="button"
+              role="tab"
+            >
+              <i class="bi bi-geo-alt-fill me-1"></i>
+              <span>Cadastrar Ponto</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="tab-content" id="admTabContent">
+        <div class="tab-pane fade show active" id="tab-rotas" role="tabpanel">
+          <div class="card card-custom mb-4">
+            <div class="card-body p-4">
+              <h2 class="h5 card-section-title mb-4">
+                <i class="bi bi-cloud-upload-fill"></i> Cadastrar Nova Rota
+                (GPX)
+              </h2>
+
+              <form id="formCadastraRota">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Nome da Rota</label>
+                    <input
+                      type="text"
+                      id="rotaNome"
+                      class="form-control"
+                      placeholder="Ex: Trilha da Bica do Ipu"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label fw-semibold">Dificuldade</label>
+                    <select id="rotaDificuldade" class="form-select">
+                      <option value="Fácil">Fácil</option>
+                      <option value="Médio" selected>Médio</option>
+                      <option value="Difícil">Difícil</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label fw-semibold">Arquivo GPX</label>
+                    <input
+                      type="file"
+                      id="rotaFileGpx"
+                      class="form-control"
+                      accept=".gpx"
+                      required
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label fw-semibold">Descrição</label>
+                    <textarea
+                      id="rotaDescricao"
+                      class="form-control"
+                      rows="2"
+                      placeholder="Pontos de atenção, dicas de hidratação..."
+                    ></textarea>
+                  </div>
+                </div>
+
+                <div class="mb-3 mt-3">
+                  <label class="form-label fw-semibold"
+                    >Mídia da Rota (Imagem/Vídeo):</label
+                  >
+                  <input
+                    type="file"
+                    id="rotaMediaInput"
+                    class="form-control"
+                    accept="image/*,video/*"
+                  />
+                </div>
+
+                <div class="mt-4">
+                  <label class="form-label fw-semibold"
+                    >Pré-visualização do Traçado GPX:</label
+                  >
+                  <div
+                    id="mapPreviewAdmin"
+                    style="height: 320px"
+                    class="rounded-3 border overflow-hidden"
+                  ></div>
+                </div>
+
+                <button
+                  type="submit"
+                  id="btnSalvarRota"
+                  class="btn btn-primary-custom fw-bold mt-4 w-100 py-2 fs-6"
+                  disabled
+                >
+                  <i class="bi bi-cloud-upload-fill me-1"></i> SALVAR ROTA NO
+                  SISTEMA
+                </button>
+              </form>
+
+              <hr class="my-5" />
+
+              <h3 class="h5 fw-bold mb-3">
+                <i class="bi bi-list-task me-1"></i> Rotas Cadastradas
+              </h3>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Dificuldade</th>
+                      <th>Distância</th>
+                      <th>Status</th>
+                      <th class="text-end">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="listaRotasBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab-guias" role="tabpanel">
+          <div class="card card-custom mb-4">
+            <div class="card-body p-4">
+              <h2 class="h5 card-section-title mb-4">
+                <i class="bi bi-person-badge-fill"></i> Cadastrar Guia Local
+              </h2>
+
+              <form id="formCadastraGuia">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Nome Completo</label>
+                    <input
+                      type="text"
+                      id="guiaNome"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Especialidade</label>
+                    <input
+                      type="text"
+                      id="guiaEspecialidade"
+                      class="form-control"
+                      placeholder="Ex: Trekking e Mountain Bike"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold"
+                      >WhatsApp / Telefone</label
+                    >
+                    <input
+                      type="text"
+                      id="guiaTelefone"
+                      class="form-control"
+                      placeholder="(88) 99999-9999"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Cidade</label>
+                    <input
+                      type="text"
+                      id="guiaCidade"
+                      class="form-control"
+                      value="Tianguá"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-success-custom fw-bold mt-4 w-100 py-2 fs-6"
+                >
+                  <i class="bi bi-check-circle-fill me-1"></i> CADASTRAR GUIA
+                </button>
+              </form>
+
+              <hr class="my-5" />
+
+              <h3 class="h5 fw-bold mb-3">
+                <i class="bi bi-people-fill me-1"></i> Guias Cadastrados
+              </h3>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Especialidade</th>
+                      <th>Telefone</th>
+                      <th>Cidade</th>
+                      <th>Status</th>
+                      <th class="text-end">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="listaGuiasBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab-pontos" role="tabpanel">
+          <div class="card card-custom mb-4">
+            <div class="card-body p-4">
+              <h2 class="h5 card-section-title mb-4">
+                <i class="bi bi-geo-alt-fill"></i> Cadastrar Ponto de Apoio
+              </h2>
+
+              <form id="formCadastraPonto">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Nome do Ponto</label>
+                    <input
+                      type="text"
+                      id="pontoNome"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Categoria</label>
+                    <select id="pontoCategoria" class="form-select">
+                      <option value="Alimentação">
+                        Alimentação / Restaurante
+                      </option>
+                      <option value="Hospedagem">Hospedagem / Pousada</option>
+                      <option value="Manutenção">Oficina / Bike Shop</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Latitude</label>
+                    <input
+                      type="number"
+                      step="any"
+                      id="pontoLat"
+                      class="form-control"
+                      placeholder="-3.7312"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Longitude</label>
+                    <input
+                      type="number"
+                      step="any"
+                      id="pontoLng"
+                      class="form-control"
+                      placeholder="-40.9912"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-3 mt-3">
+                  <label class="form-label fw-semibold"
+                    >Mídia do Ponto de Apoio (Imagem/Vídeo):</label
+                  >
+                  <input
+                    type="file"
+                    id="pontoMediaInput"
+                    class="form-control"
+                    accept="image/*,video/*"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-accent-custom fw-bold text-white mt-4 w-100 py-2 fs-6"
+                >
+                  <i class="bi bi-geo-fill me-1"></i> CADASTRAR PONTO DE APOIO
+                </button>
+              </form>
+
+              <hr class="my-5" />
+
+              <h3 class="h5 fw-bold mb-3">
+                <i class="bi bi-pin-map-fill me-1"></i> Pontos de Apoio
+                Cadastrados
+              </h3>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Categoria</th>
+                      <th>Coordenadas</th>
+                      <th>Status</th>
+                      <th class="text-end">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="listaPontosBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal fade" id="modalEdicao" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="modalEdicaoTitulo">
+              Editar Registro
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formEdicao">
+              <input type="hidden" id="editId" />
+              <input type="hidden" id="editTipo" />
+              <div id="modalEdicaoCampos"></div>
+              <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold">
+                Salvar Alterações
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>

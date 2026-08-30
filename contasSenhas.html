@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="images/nature/Homem.jpeg" type="image/gif" />
+
+    <title>IBI-EXPLORER - Contas e Senhas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/feedUsuario.css" />
+  </head>
+
+  <body class="py-4">
+    <div class="container" style="max-width: 960px">
+      
+      <header class="d-flex align-items-center justify-content-between p-3 px-4 rounded-4 mb-4 header-panel">
+        <h1 class="h4 m-0 fw-bold brand-title d-flex align-items-center gap-2">
+          <i class="bi bi-compass-fill icon-brand"></i>
+          <span>IBI-EXPLORER</span>
+        </h1>
+        <button id="btnLogout" class="btn btn-logout btn-sm fw-semibold d-flex align-items-center gap-2">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Sair</span>
+        </button>
+      </header>
+
+      <div class="mb-3">
+        <a href="feedUsuario.html" class="btn btn-sm btn-outline-secondary fw-semibold">
+          <i class="bi bi-arrow-left"></i> Voltar ao Feed
+        </a>
+      </div>
+
+      <main class="card card-custom mb-4">
+        <div class="card-body p-4">
+          <h2 class="h5 card-section-title mb-4">
+            <i class="bi bi-shield-lock-fill text-primary"></i> Gerenciar Conta & Segurança
+          </h2>
+
+          <div id="alertConta"></div>
+
+          <div class="text-center mb-4 pb-3 border-bottom">
+            <div class="position-relative d-inline-block mb-2">
+              <img id="imgPerfilPreview" src="images/nature/Homem.jpeg" class="rounded-circle border border-3 border-primary shadow-sm" style="width: 110px; height: 110px; object-fit: cover;" alt="Foto de Perfil">
+              
+              <div id="spinnerFoto" class="position-absolute top-50 start-50 translate-middle d-none">
+                <div class="spinner-border text-primary" role="status"></div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center gap-2 mt-1">
+              <label for="filePerfilFoto" class="btn btn-sm btn-outline-primary rounded-circle p-2" title="Alterar Foto" style="width: 36px; height: 36px; line-height: 1; cursor: pointer;">
+                <i class="bi bi-camera-fill"></i>
+              </label>
+              <input type="file" id="filePerfilFoto" class="d-none" accept="image/*">
+
+              <button type="button" id="btnDeletePerfilFoto" class="btn btn-sm btn-outline-danger rounded-circle p-2" title="Remover Foto" style="width: 36px; height: 36px; line-height: 1;">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </div>
+            <small id="lblFotoStatus" class="d-block text-muted mt-2 fw-semibold"></small>
+          </div>
+
+          <form id="formEmail" class="mb-4">
+            <h6 class="fw-bold mb-3 text-dark"><i class="bi bi-envelope"></i> E-mail da Conta</h6>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">E-mail Registrado</label>
+              <input type="email" id="txtContaEmail" class="form-control" required placeholder="seuemail@exemplo.com">
+            </div>
+            <button type="submit" class="btn btn-outline-primary fw-semibold btn-sm">
+              Atualizar E-mail
+            </button>
+          </form>
+
+          <hr class="my-4">
+
+          <form id="formSenha">
+            <h6 class="fw-bold mb-3 text-dark"><i class="bi bi-key"></i> Alterar Senha</h6>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Nova Senha</label>
+              <input type="password" id="txtContaNovaSenha" class="form-control" minlength="6" placeholder="Mínimo 6 caracteres" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Confirmar Nova Senha</label>
+              <input type="password" id="txtContaConfirmarSenha" class="form-control" minlength="6" placeholder="Repita a nova senha" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary-custom w-100 fw-bold py-2 mt-2">
+              ATUALIZAR SENHA
+            </button>
+          </form>
+
+        </div>
+      </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/contasSenhas.js"></script>
+  </body>
+</html>

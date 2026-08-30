@@ -1,0 +1,113 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url(../images/nature/fundo.jpg);
+  background-position: center; /* Centraliza a imagem */
+  background-size: cover; /* Faz a imagem ocupar toda a tela */
+}
+
+/* Container central */
+.login-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  text-align: center;
+}
+
+/* Título */
+.login-container h1 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Inputs */
+.input-group {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #4facfe;
+  outline: none;
+}
+
+/* Botão */
+button {
+  width: 100%;
+  padding: 12px;
+  background: #4facfe;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #00c6fb;
+}
+
+/* Link de cadastro/login */
+.register {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.register a {
+  color: #4facfe;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+
+.esqueci-senha-container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.link-esqueci-senha {
+  font-size: 0.85rem;
+  color: #4da6ff; /* Cor azul do seu tema */
+  text-decoration: none; /* Remove o sublinhado padrão */
+  font-family: inherit;
+}
+
+/* Aplica o tracinho quando passa o mouse por cima */
+.link-esqueci-senha:hover {
+  text-decoration: underline;
+}

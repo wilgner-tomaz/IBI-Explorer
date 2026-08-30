@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar Senha</title>
+    <link rel="stylesheet" href="css/login.css" />
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+
+    <!-- SDK do EmailJS para envio de e-mails -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+      // Inicialize com a sua Public Key do EmailJS (se possuir)
+      (function() {
+          emailjs.init("SUA_PUBLIC_KEY_EMAILJS");
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>Recuperar Senha</h1>
+      <p style="font-size: 0.9rem; text-align: center; margin-bottom: 20px; color: #555;">
+        Informe seu e-mail cadastrado. Enviaremos uma nova senha gerada automaticamente para você.
+      </p>
+
+      <form id="esqueciSenhaForm">
+        <div class="input-group">
+          <label for="emailRecuperacao">E-mail Cadastrado</label>
+          <input
+            type="email"
+            id="emailRecuperacao"
+            placeholder="Digite seu e-mail"
+            required
+          />
+        </div>
+
+        <button type="submit" id="btnEnviarEmail">Enviar Nova Senha</button>
+
+        <div class="esqueci-senha-container" style="margin-top: 15px;">
+          <a href="login.html" class="link-esqueci-senha">Lembrou a senha? Voltar ao Login</a>
+        </div>
+      </form>
+    </div>
+
+    <script src="js/esqueciSenha.js"></script>
+  </body>
+</html>

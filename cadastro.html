@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="css/login.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>Cadastro</h1>
+      <form id="registerForm">
+        <div class="input-group">
+          <label for="name">Nome</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Digite seu nome"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="lastName">Sobrenome</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="Digite seu sobrenome"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="phone">Telefone</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="(XX) XXXXX-XXXX"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="newEmail">E-mail</label>
+          <input
+            type="email"
+            id="newEmail"
+            name="newEmail"
+            placeholder="Digite seu e-mail"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="newSenha">Senha</label>
+          <input
+            type="password"
+            id="newSenha"
+            name="newSenha"
+            placeholder="Crie uma senha"
+            required
+          />
+        </div>
+
+        <button type="submit">Cadastrar</button>
+        <p class="register">Já tem conta? <a href="login.html">Entrar</a></p>
+      </form>
+    </div>
+
+    <script src="js/cadastro.js"></script>
+  </body>
+</html>

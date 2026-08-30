@@ -1,0 +1,107 @@
+.navbar-dark.bg-dark {
+  background-color: #0f1521 !important;
+}
+body {
+  background-color: white;
+}
+/* Estiliza a caixa do botão */
+.navbar-toggler {
+  border: 2px solid #0f1521; /* Muda a cor da borda para verde */
+  padding: 10px;
+  border-radius: 10px;
+  outline: none #0f1521; /* Remove aquele brilho azul ao clicar */
+}
+
+/* Muda a cor de fundo do botão ao passar o mouse */
+.navbar-toggler:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.navbar-brand span {
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+/* Configuração da Navbar Dark */
+.navbar-dark.bg-dark {
+  background-color: #0f1521 !important;
+  height: 65px;
+}
+
+/* Transforma o collapse em uma barra lateral fixa na esquerda */
+.menu-lateral {
+  position: fixed;
+  top: 65px; /* Mesma altura da navbar */
+  left: 0;
+  width: 260px;
+  height: calc(100vh - 65px);
+  z-index: 1050;
+  background-color: #0f1521;
+  transition: all 0.4s ease;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo dos itens da lista */
+.nav-link-lista {
+  color: #ffffff;
+  display: block;
+  padding: 12px 15px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  transition: 0.3s;
+  margin-bottom: 5px;
+}
+
+.nav-link-lista i {
+  margin-right: 12px;
+  width: 25px;
+  text-align: center;
+}
+
+.nav-link-lista:hover {
+  background-color: #0000008c;
+  color: #fffdfd; /* Destaque verde no hover */
+  text-decoration: none;
+}
+
+/* Compensação para o conteúdo do body não ficar escondido */
+body {
+  padding-top: 65px;
+}
+
+body {
+  background-color: #f4f5f7; /* Fundo cinza claro para destacar os cards brancos */
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+}
+
+.card-perfil {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-post h4 {
+  color: #0f1521;
+  font-weight: bold;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+}
+
+/* Estilo para simular o mapa da atividade */
+.map-placeholder {
+  background: #e9ecef;
+  color: #6c757d;
+}
+#map {
+  z-index: 1; /* Garante que o mapa não fique em cima do menu lateral */
+}
+.gap-2 {
+  gap: 0.5rem;
+}

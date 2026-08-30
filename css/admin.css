@@ -1,0 +1,157 @@
+/* ========================================================
+   IBI-EXPLORER - Admin Ocean Modern Style
+   ======================================================== */
+
+:root {
+  --ibi-primary: #0284c7;
+  --ibi-primary-hover: #0369a1;
+  --ibi-primary-light: #f0f9ff;
+  --ibi-primary-border: #bae6fd;
+  --ibi-accent: #06b6d4;
+  --ibi-accent-hover: #0891b2;
+
+  --ibi-success: #10b981;
+  --ibi-success-hover: #059669;
+
+  --ibi-bg-page: #f8fafc;
+  --ibi-card-bg: #ffffff;
+
+  --ibi-text-main: #0f172a;
+  --ibi-text-muted: #64748b;
+  --ibi-border-color: #e2e8f0;
+
+  --ibi-danger: #ef4444;
+  --ibi-danger-bg: #fef2f2;
+}
+
+body {
+  background-color: var(--ibi-bg-page);
+  color: var(--ibi-text-main);
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CABEÇALHO DA PÁGINA */
+.header-panel {
+  background-color: var(--ibi-card-bg);
+  border: 1px solid var(--ibi-border-color);
+  border-left: 6px solid var(--ibi-primary);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+}
+
+.brand-title {
+  color: var(--ibi-primary);
+}
+
+.icon-brand {
+  color: var(--ibi-accent);
+}
+
+/* BOTÃO VOLTAR / SAIR */
+.btn-logout {
+  color: var(--ibi-primary);
+  background-color: var(--ibi-primary-light);
+  border: 1px solid var(--ibi-primary-border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+  background-color: var(--ibi-primary);
+  color: #ffffff;
+}
+
+/* NAVEGAÇÃO DE NAVE S / PILLS */
+.nav-pills-custom {
+  background-color: var(--ibi-card-bg);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--ibi-border-color);
+  gap: 4px;
+}
+
+.nav-pills-custom .nav-link {
+  color: var(--ibi-text-muted);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-pills-custom .nav-link.active {
+  background-color: var(--ibi-primary) !important;
+  color: #ffffff !important;
+}
+
+/* CARDS E SEÇÕES */
+.card-custom {
+  background-color: var(--ibi-card-bg);
+  border: 1px solid var(--ibi-border-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.card-section-title {
+  color: var(--ibi-text-main);
+  font-weight: 700;
+  border-bottom: 2px solid var(--ibi-primary-light);
+  padding-bottom: 12px;
+}
+
+/* BOTÕES DE AÇÃO CUSTOMIZADOS */
+.btn-primary-custom {
+  background-color: var(--ibi-primary);
+  border-color: var(--ibi-primary);
+  color: #ffffff;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary-custom:hover:not(:disabled) {
+  background-color: var(--ibi-primary-hover);
+  border-color: var(--ibi-primary-hover);
+  color: #ffffff;
+}
+
+.btn-success-custom {
+  background-color: var(--ibi-success);
+  border-color: var(--ibi-success);
+  color: #ffffff;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-success-custom:hover {
+  background-color: var(--ibi-success-hover);
+  border-color: var(--ibi-success-hover);
+  color: #ffffff;
+}
+
+.btn-accent-custom {
+  background-color: var(--ibi-accent);
+  border-color: var(--ibi-accent);
+  color: #ffffff;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-accent-custom:hover {
+  background-color: var(--ibi-accent-hover);
+  border-color: var(--ibi-accent-hover);
+  color: #ffffff;
+}
+
+/* FORMULÁRIOS & CAMPOS */
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border-color: var(--ibi-border-color);
+  padding: 10px 14px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--ibi-primary);
+  box-shadow: 0 0 0 0.25rem rgba(2, 132, 199, 0.15);
+}
