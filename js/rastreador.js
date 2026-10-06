@@ -8,6 +8,7 @@ let distanciaTotalKm = 0;
 let elevacaoTotalM = 0;
 let ultimaAltitude = null;
 let timerInterval = null;
+let tempoInicio = null;
 let tempoDecorridoSegundos = 0;
 
 window.mapInstance = window.mapInstance || null;
@@ -59,7 +60,6 @@ function calcularMET(distanciaKm, tempoMinutos, pesoKg = 70) {
 
 function inicializarMapaLeaflet() {
   if (!mapInstance) {
-    // Inicializa o mapa temporariamente (o zoom real será ajustado no primeiro fix do GPS)
     mapInstance = L.map("mapTracker").setView([-3.7319, -40.9921], 15);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
@@ -67,7 +67,6 @@ function inicializarMapaLeaflet() {
     }).addTo(mapInstance);
   }
 
-  // Limpa trajeto anterior se houver
   if (polylineRota) {
     mapInstance.removeLayer(polylineRota);
     polylineRota = null;
@@ -78,7 +77,6 @@ function inicializarMapaLeaflet() {
     opacity: 0.8,
   }).addTo(mapInstance);
 
-  // Limpa marcador anterior se houver
   if (userMarker) {
     mapInstance.removeLayer(userMarker);
     userMarker = null;
@@ -91,6 +89,7 @@ function iniciarRastreamento() {
   elevacaoTotalM = 0;
   ultimaAltitude = null;
   tempoDecorridoSegundos = 0;
+  tempoInicio = Date.now(); // Marca o timestamp exato do início
 
   setTimeout(() => {
     inicializarMapaLeaflet();
@@ -103,7 +102,9 @@ function iniciarRastreamento() {
 
   if (timerInterval) clearInterval(timerInterval);
   timerInterval = setInterval(() => {
-    tempoDecorridoSegundos++;
+    // Calcula o tempo decorrido usando a diferença de relógio real
+    tempoDecorridoSegundos = Math.floor((Date.now() - tempoInicio) / 1000);
+
     const mins = String(Math.floor(tempoDecorridoSegundos / 60)).padStart(
       2,
       "0"
@@ -118,9 +119,7 @@ function iniciarRastreamento() {
         const { latitude, longitude, altitude } = position.coords;
         const pontoAtual = [latitude, longitude];
 
-        // 1. Cria ou Atualiza a Posição do Marcador do Usuário no Mapa (Ponto/Boneco)
         if (!userMarker && mapInstance) {
-          // Cria um ícone personalizado simulando um ponto de localização animado/destacado
           const iconeUsuario = L.divIcon({
             className: "custom-user-marker",
             html: '<div style="background-color: #0284c7; width: 16px; height: 16px; border: 3px solid #ffffff; border-radius: 50%; box-shadow: 0 0 10px rgba(0,0,0,0.5);"></div>',
@@ -131,20 +130,16 @@ function iniciarRastreamento() {
           userMarker = L.marker(pontoAtual, { icon: iconeUsuario }).addTo(
             mapInstance
           );
-          // Centraliza o mapa na posição exata inicial do usuário
           mapInstance.setView(pontoAtual, 17);
         } else if (userMarker) {
           userMarker.setLatLng(pontoAtual);
-          // Opcional: Centraliza o mapa acompanhando o usuário em tempo real
           mapInstance.panTo(pontoAtual);
         }
 
-        // 2. Cálculo de Elevação
         if (altitude !== null && altitude !== undefined) {
           if (ultimaAltitude !== null && altitude > ultimaAltitude) {
             const ganho = altitude - ultimaAltitude;
             if (ganho < 15) {
-              // Evita saltos bruscos de erro de leitura do GPS
               elevacaoTotalM += ganho;
               document.getElementById("liveElevation").innerText =
                 Math.round(elevacaoTotalM);
@@ -153,7 +148,6 @@ function iniciarRastreamento() {
           ultimaAltitude = altitude;
         }
 
-        // 3. Cálculo de Distância (Haversine)
         if (posicoes.length > 0) {
           const ultimoPonto = posicoes[posicoes.length - 1];
           const distTrecho = calcularHaversine(
@@ -163,7 +157,6 @@ function iniciarRastreamento() {
             longitude
           );
 
-          // Ignora pequenas oscilações de GPS parado (< 2 metros)
           if (distTrecho > 0.002) {
             distanciaTotalKm += distTrecho;
             document.getElementById("liveDistance").innerText =
@@ -171,7 +164,6 @@ function iniciarRastreamento() {
           }
         }
 
-        // 4. Adiciona ao Array de Trajeto e Desenha a Polyline
         posicoes.push(pontoAtual);
         if (mapInstance && polylineRota) {
           polylineRota.addLatLng(pontoAtual);
@@ -193,6 +185,10 @@ function iniciarRastreamento() {
 function pararRastreamento() {
   if (watchId) navigator.geolocation.clearWatch(watchId);
   if (timerInterval) clearInterval(timerInterval);
+
+  if (tempoInicio) {
+    tempoDecorridoSegundos = Math.floor((Date.now() - tempoInicio) / 1000);
+  }
 
   const tempoMinutos = Math.max(1, Math.round(tempoDecorridoSegundos / 60));
 
@@ -237,7 +233,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const mediaInput = document.getElementById("mediaInput");
       const mediaFile = mediaInput ? mediaInput.files[0] : null;
 
-      const tempoMinutos = Math.max(1, Math.round(tempoDecorridoSegundos / 60));
+      const tempoMinutosText =
+        document.getElementById("summaryTime")?.innerText;
+      const tempoMinutos =
+        parseInt(tempoMinutosText, 10) ||
+        Math.max(1, Math.round(tempoDecorridoSegundos / 60));
+
       const calorias = calcularMET(
         distanciaTotalKm,
         tempoMinutos,
@@ -249,15 +250,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const usuarioLocal = JSON.parse(localStorage.getItem("usuarioLogado"));
-        const userId = usuarioLocal?.id || usuarioLogado?.id;
 
-        if (!userId) {
-          throw new Error("Usuário não identificado. Faça login novamente.");
+        if (!usuarioLocal) {
+          throw new Error(
+            "Usuário não encontrado no localStorage. Faça login novamente."
+          );
+        }
+
+        // Garante que o usuario_id seja a Primary Key 'id' da tabela 'usuarios'
+        let userId = usuarioLocal.id;
+
+        const { data: userBD } = await _supabase
+          .from("usuarios")
+          .select("id")
+          .or(
+            `id.eq.${userId},auth_id.eq.${userId},email.eq.${usuarioLocal.email}`
+          )
+          .maybeSingle();
+
+        if (userBD) {
+          userId = userBD.id;
+        } else {
+          throw new Error(
+            "Usuário não encontrado na tabela 'usuarios' do banco de dados."
+          );
         }
 
         let mediaUrlFinal = null;
 
-        // Upload de foto/vídeo para o Storage
+        // Upload de mídia
         if (mediaFile) {
           const cleanName = mediaFile.name.replace(/[^a-zA-Z0-9.]/g, "_");
           const fileName = `atividade_${Date.now()}_${cleanName}`;
@@ -300,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(`Erro no Banco: ${errAtividade.message}`);
         }
 
-        // Salva os pontos no banco se houver
+        // Salva as coordenadas da rota
         if (
           atividadeCriada &&
           atividadeCriada.length > 0 &&
@@ -312,13 +333,12 @@ document.addEventListener("DOMContentLoaded", () => {
             ordem: index,
             latitude: pos[0],
             longitude: pos[1],
-            altitude: pos[2] || 0, // Garante envio da altitude ou 0 como padrão
+            altitude: pos[2] || 0,
           }));
 
           await _supabase.from("coordenadas_rota").insert(payloadCoords);
         }
 
-        // Limpa campos e fecha o Modal
         if (mediaInput) mediaInput.value = "";
         const modalSaveEl = document.getElementById("modalSaveActivity");
         if (typeof bootstrap !== "undefined" && modalSaveEl) {
